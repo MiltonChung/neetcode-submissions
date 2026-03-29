@@ -1,0 +1,60 @@
+class MinHeap:
+    
+    def __init__(self):
+        self.heap = [0]
+
+    def push(self, val: int) -> None:
+        self.heap.append(val)
+        i = len(self.heap) - 1
+
+        while i > 1 and self.heap[i] < self.heap[i // 2]:
+            temp = self.heap[i]
+            self.heap[i] = self.heap[i // 2]
+            self.heap[i // 2] = temp
+            i = i // 2
+
+    def pop(self) -> int:
+        if len(self.heap) == 1:
+            return -1
+        if len(self.heap) == 2:
+            return  self.heap.pop()
+
+        res = self.heap[1]
+        self.heap[1] = self.heap.pop()
+        i = 1
+
+        while i * 2 < len(self.heap):
+            if 2*i + 1 < len(self.heap) and self.heap[i * 2 + 1] < self.heap[i * 2] and self.heap[i] > self.heap[i * 2 + 1]:
+                temp = self.heap[i]
+                self.heap[i] = self.heap[i*2 + 1]
+                self.heap[i*2 + 1] = temp
+                i = i * 2 + 1
+            elif self.heap[i] > self.heap[i * 2]:
+                temp = self.heap[i]
+                self.heap[i] = self.heap[i*2]
+                self.heap[i*2] = temp
+                i = i * 2
+            else:
+                break
+        
+        return res
+
+    def top(self) -> int:
+        if len(self.heap) == 1:
+            return -1
+        else:
+            return self.heap[1]
+
+    def heapify(self, nums: List[int]) -> None:
+        for num in nums:
+            self.push(num)
+
+
+
+
+
+
+
+
+
+        
